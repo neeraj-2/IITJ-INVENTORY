@@ -24,3 +24,4 @@ Request items for issue, set due dates, issue items, return etc.
 | [Rohan Singh](https://github.com/rohansingh9001) | Sophomore | Electrical Engineering |
 | [Maruf Hussain](https://github.com/rohansingh9001) | Sophomore | Computer Science And Engineering |
 | [Manav Kapoor](https://github.com/manav1403) | Sophomore | Electrical Engineering |
+| [Neeraj Anand](https://github.com/neeraj-2) | Sophomore | Computer Science And Engineering |
