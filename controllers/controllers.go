@@ -8,31 +8,42 @@ import (
 	"myURL.com/inventory/database"
 	"myURL.com/inventory/helpers"
 	"myURL.com/inventory/models"
+
+	"github.com/gin-gonic/gin"
 )
 
-func GetHome(w http.ResponseWriter, r *http.Request) {
+func GetHome(ctx *gin.Context) {
 	db := database.OpenConnectionToDb()
 
 	var users []models.User
 	db.Find(&users)
 	fmt.Println("{}", users)
 
-	json.NewEncoder(w).Encode(users)
+	// var data string
+
+	// json.NewEncoder(data).Encode(users)
+
+
+	ctx.JSON(http.StatusOK, gin.H{"users": users})
 
 	defer db.Close()
 }
 
-func AddUser(w http.ResponseWriter, r *http.Request) {
+func AddUser(ctx *gin.Context) {
 	db := database.OpenConnectionToDb()
 
 	var user models.User
-	err := json.NewDecoder(r.Body).Decode(&user)
+
+
+	err := json.NewDecoder(ctx.Request.Body).Decode(&user)
 	helpers.CheckError(err)
 
 	fmt.Println(user)
 
 	db.Create(&user)
 
-	w.WriteHeader(http.StatusOK)
+	fmt.Println(ctx.PostForm("user"))
+
+	ctx.String(http.StatusOK, "User Added")
 	defer db.Close()
 }

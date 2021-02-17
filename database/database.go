@@ -12,10 +12,10 @@ import (
 
 const (
 	host     = "127.0.0.1"
-	port     = 3000
-	user     = "postgres"
-	password = "Tarun@2001"
-	dbname   = "test"
+	port     = 5432
+	user     = "rohan"
+	password = "Rohan@2001"
+	dbname   = "postgres"
 )
 
 func InitialMigration() {
