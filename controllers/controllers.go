@@ -23,7 +23,6 @@ func GetHome(ctx *gin.Context) {
 
 	// json.NewEncoder(data).Encode(users)
 
-
 	ctx.JSON(http.StatusOK, gin.H{"users": users})
 
 	defer db.Close()
@@ -33,7 +32,6 @@ func AddUser(ctx *gin.Context) {
 	db := database.OpenConnectionToDb()
 
 	var user models.User
-
 
 	err := json.NewDecoder(ctx.Request.Body).Decode(&user)
 	helpers.CheckError(err)

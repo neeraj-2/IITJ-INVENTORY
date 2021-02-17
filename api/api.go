@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"log"
+
 	"github.com/joho/godotenv"
 
 	"myURL.com/inventory/controllers"
