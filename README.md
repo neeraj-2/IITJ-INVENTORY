@@ -4,19 +4,13 @@ Inventory Management System
 
 TechStack - 
 Backend : GO 
-Frontend : React/Vue (Neeraj and Github) 
+Frontend : Vue  
 
-DataBase : Postgres/MySQL 
+DataBase : Postgres 
 
 Steps to follow - 
 
-1. Install GO on your system.
-2. Learn basic syntax for GO.
-3. Start Writing Some CODE #Challenge for Day 1
-
 .................................................................................................................................................................................
-
-# A custom signup Service for every website :D
 
 1. Every Society login
 2. Society Entry Database
@@ -26,7 +20,7 @@ Steps to follow -
 6. Budget (Optional)
 7. Request for renewal/return
 8. Admin Portal for every Society
-...................................................................................................................................................................................
+.................................................................................................................................................................................
 
 
 DataBase
