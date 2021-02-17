@@ -19,8 +19,8 @@ type Items struct {
 	ItemKey  string `gorm:"primaryKey;not null"` // identifier or ItemKey
 	Society  string `gorm:"not null"`            // society or society key
 	Details  string
-	Quantity int `gorm:"not null"`
-	Availabe int `gorm:"not null"`
+	Quantity int 	`gorm:"not null"`
+	Available int 	`gorm:"not null"`
 }
 
 type Societies struct {
