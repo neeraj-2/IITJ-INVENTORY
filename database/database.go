@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"myURL.com/inventory/helpers"
 	"myURL.com/inventory/models"
@@ -11,20 +12,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-
-
-
-
-
 func InitialMigration() {
-	
-	host     := os.Getenv("HOST")
-	port     := 5432
-	user     := os.Getenv("USER")
-	password := os.Getenv("PASSWORD")
-	dbname   := os.Getenv("DBNAME")
 
-	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	port, _ := strconv.Atoi(os.Getenv("PORT"))
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("HOST"), port, os.Getenv("USER"), os.Getenv("PASSWORD"), os.Getenv("DBNAME"))
 
 	db, err := gorm.Open("postgres", psqlconn)
 	helpers.CheckError(err)
@@ -40,13 +32,10 @@ func InitialMigration() {
 }
 
 func OpenConnectionToDb() *gorm.DB {
-	
-	host     := os.Getenv("HOST")
-	port     := 5432
-	user     := os.Getenv("USER")
-	password := os.Getenv("PASSWORD")
-	dbname   := os.Getenv("DBNAME")
-	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
+	port, _ := strconv.Atoi(os.Getenv("PORT"))
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("HOST"), port, os.Getenv("USER"), os.Getenv("PASSWORD"), os.Getenv("DBNAME"))
 
 	db, err := gorm.Open("postgres", psqlconn)
 	helpers.CheckError(err)
