@@ -13,13 +13,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func StartApi() {
+var server = controllers.Server{}
+
+//StartAPI ...
+func StartAPI() {
+
+	// Loadind env variables
 	err := godotenv.Load(".env")
 	helpers.CheckError(err)
-	database.InitialMigration()
-	router := gin.Default()
-	router.GET("/getHome", controllers.GetHome)
-	router.POST("/addUser", controllers.AddUser)
+
+	// Intialising the Server
+	server.DB = database.InitialMigration()
+	server.Router = gin.Default()
+
+	// Intialising the Routes
+	server.InitializeRoutes()
+
+	//Starting the Server
 	fmt.Println("App is working on port :8080")
-	log.Fatal(router.Run(":8080"))
+	log.Fatal(server.Router.Run(":8080"))
 }

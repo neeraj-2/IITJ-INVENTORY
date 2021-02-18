@@ -9,10 +9,13 @@ import (
 	"myURL.com/inventory/models"
 
 	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
+
+	// adding driver for postgres
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-func InitialMigration() {
+//InitialMigration ...
+func InitialMigration() *gorm.DB {
 
 	port, _ := strconv.Atoi(os.Getenv("DB_PORT"))
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
@@ -20,7 +23,6 @@ func InitialMigration() {
 
 	db, err := gorm.Open("postgres", psqlconn)
 	helpers.CheckError(err)
-	defer db.Close()
 
 	// Migrate the schema
 	db.AutoMigrate(&models.User{})
@@ -29,8 +31,11 @@ func InitialMigration() {
 	db.AutoMigrate(&models.Issued{})
 	db.AutoMigrate(&models.Inbound{})
 	db.AutoMigrate(&models.Defective{})
+
+	return db
 }
 
+//OpenConnectionToDb ...
 func OpenConnectionToDb() *gorm.DB {
 
 	port, _ := strconv.Atoi(os.Getenv("DB_PORT"))

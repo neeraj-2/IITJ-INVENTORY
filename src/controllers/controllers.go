@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"net/http"
 
-	"myURL.com/inventory/database"
 	"myURL.com/inventory/helpers"
 	"myURL.com/inventory/models"
 
 	"github.com/gin-gonic/gin"
 )
 
-func GetHome(ctx *gin.Context) {
-	db := database.OpenConnectionToDb()
+//GetHome ..
+func (s *Server) GetHome(ctx *gin.Context) {
+	db := s.DB
 
 	var users []models.User
 	db.Find(&users)
@@ -28,8 +28,9 @@ func GetHome(ctx *gin.Context) {
 	defer db.Close()
 }
 
-func AddUser(ctx *gin.Context) {
-	db := database.OpenConnectionToDb()
+//AddUser ...
+func (s *Server) AddUser(ctx *gin.Context) {
+	db := s.DB
 
 	var user models.User
 
