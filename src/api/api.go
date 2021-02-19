@@ -18,15 +18,15 @@ var server = controllers.Server{}
 //StartAPI ...
 func StartAPI() {
 
-	// Loadind env variables
+	// Loading env variables
 	err := godotenv.Load(".env")
 	helpers.CheckError(err)
 
-	// Intialising the Server
+	// Initialising the Server
 	server.DB = database.InitialMigration()
 	server.Router = gin.Default()
 
-	// Intialising the Routes
+	// Initialising the Routes
 	server.InitializeRoutes()
 
 	//Starting the Server

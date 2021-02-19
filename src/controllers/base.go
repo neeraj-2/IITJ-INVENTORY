@@ -5,7 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-//Server intialsation ...
+//Server initialisation ...
 type Server struct {
 	DB     *gorm.DB
 	Router *gin.Engine

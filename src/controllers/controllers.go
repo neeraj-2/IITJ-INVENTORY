@@ -22,7 +22,6 @@ func (s *Server) GetHome(ctx *gin.Context) {
 	// var data string
 
 	// json.NewEncoder(data).Encode(users)
-
 	ctx.JSON(http.StatusOK, gin.H{"users": users})
 
 	defer db.Close()

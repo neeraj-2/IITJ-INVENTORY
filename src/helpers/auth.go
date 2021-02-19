@@ -15,7 +15,7 @@ import (
 )
 
 //CreateToken to create JWT token
-func CreateToken(userID uint32) (string, error) {
+func CreateToken(userID uint32) string {
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["user_id"] = userID
