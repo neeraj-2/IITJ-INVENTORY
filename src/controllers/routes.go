@@ -12,7 +12,8 @@ func (s *Server) InitializeRoutes() {
 
 	auth := r.Group(("/auth"))
 	{
-		auth.GET("/login")
-		auth.GET("/callback")
+		auth.GET("/login", s.Login)
+		auth.GET("/callback", s.Callback)
+		auth.GET("error", s.Error)
 	}
 }
