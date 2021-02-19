@@ -5,8 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	"myURL.com/inventory/helpers"
-	"myURL.com/inventory/models"
+	"myurl.com/inventory/helpers"
+	"myurl.com/inventory/models"
 
 	"github.com/jinzhu/gorm"
 

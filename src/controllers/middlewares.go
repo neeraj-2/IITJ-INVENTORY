@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"myURL.com/inventory/helpers"
+	"myurl.com/inventory/helpers"
 )
 
 //SetMiddlewareJSON sets the header content type

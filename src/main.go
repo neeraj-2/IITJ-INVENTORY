@@ -1,7 +1,7 @@
 package main
 
 import (
-	"myURL.com/inventory/api"
+	"myurl.com/inventory/api"
 )
 
 func main() {

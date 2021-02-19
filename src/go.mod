@@ -1,4 +1,4 @@
-module myURL.com/inventory
+module myurl.com/inventory
 
 go 1.15
 

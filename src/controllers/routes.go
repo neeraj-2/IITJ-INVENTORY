@@ -9,4 +9,10 @@ func (s *Server) InitializeRoutes() {
 		api.GET("/getHome", s.GetHome)
 		api.POST("/addUser", s.AddUser)
 	}
+
+	auth := r.Group(("/auth"))
+	{
+		auth.GET("/login")
+		auth.GET("/callback")
+	}
 }
