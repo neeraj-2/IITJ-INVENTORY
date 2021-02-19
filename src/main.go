@@ -1,9 +1,9 @@
 package main
 
 import (
-	"myurl.com/inventory/api"
+	"myurl.com/inventory/backend"
 )
 
 func main() {
-	api.StartAPI()
+	backend.StartAPI()
 }
