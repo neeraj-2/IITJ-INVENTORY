@@ -5,8 +5,8 @@ import (
 	"os"
 	"strconv"
 
-	"myURL.com/inventory/helpers"
-	"myURL.com/inventory/models"
+	"myurl.com/inventory/helpers"
+	"myurl.com/inventory/models"
 
 	"github.com/jinzhu/gorm"
 
@@ -26,8 +26,8 @@ func InitialMigration() *gorm.DB {
 
 	// Migrate the schema
 	db.AutoMigrate(&models.User{})
-	db.AutoMigrate(&models.Items{})
-	db.AutoMigrate(&models.Societies{})
+	db.AutoMigrate(&models.Item{})
+	db.AutoMigrate(&models.Society{})
 	db.AutoMigrate(&models.Issued{})
 	db.AutoMigrate(&models.Inbound{})
 	db.AutoMigrate(&models.Defective{})

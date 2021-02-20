@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"myURL.com/inventory/helpers"
-	"myURL.com/inventory/models"
+	"myurl.com/inventory/helpers"
+	"myurl.com/inventory/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,12 +16,9 @@ func (s *Server) GetHome(ctx *gin.Context) {
 	db := s.DB
 
 	var users []models.User
+
 	db.Find(&users)
 	fmt.Println("{}", users)
-
-	// var data string
-
-	// json.NewEncoder(data).Encode(users)
 
 	ctx.JSON(http.StatusOK, gin.H{"users": users})
 

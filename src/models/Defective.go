@@ -11,5 +11,5 @@ type Defective struct {
 	gorm.Model
 	DateOfDest time.Time `gorm:"not null"`
 	Quantity   string    `gorm:"not null"`
-	ItemKey    string    `gorm:"primaryKey;not null"`
+	Item Item
 }

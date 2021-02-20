@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"myURL.com/inventory/helpers"
+	"myurl.com/inventory/helpers"
 )
 
 //SetMiddlewareJSON sets the header content type
@@ -20,7 +20,7 @@ func SetMiddlewareAuthentication(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := helpers.TokenValid(r)
 		if err != nil {
-			helpers.ERROR(w, http.StatusUnauthorized, errors.New("Unauthorized"))
+			helpers.ERROR(w, http.StatusUnauthorized, errors.New("unauthorized"))
 			return
 		}
 		next(w, r)

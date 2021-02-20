@@ -9,4 +9,11 @@ func (s *Server) InitializeRoutes() {
 		api.GET("/getHome", s.GetHome)
 		api.POST("/checkEmailExists", s.CheckIfEmailExists)
 	}
+
+	auth := r.Group(("/auth"))
+	{
+		auth.GET("/login", s.Login)
+		auth.GET("/callback", s.Callback)
+		auth.GET("error", s.Error)
+	}
 }

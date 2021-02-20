@@ -1,4 +1,4 @@
-package api
+package backend
 
 import (
 	"fmt"
@@ -6,9 +6,9 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"myURL.com/inventory/controllers"
-	"myURL.com/inventory/database"
-	"myURL.com/inventory/helpers"
+	"myurl.com/inventory/controllers"
+	"myurl.com/inventory/database"
+	"myurl.com/inventory/helpers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,15 +18,15 @@ var server = controllers.Server{}
 //StartAPI ...
 func StartAPI() {
 
-	// Loadind env variables
+	// Loading env variables
 	err := godotenv.Load(".env")
 	helpers.CheckError(err)
 
-	// Intialising the Server
+	// Initialising the Server
 	server.DB = database.InitialMigration()
 	server.Router = gin.Default()
 
-	// Intialising the Routes
+	// Initialising the Routes
 	server.InitializeRoutes()
 
 	//Starting the Server
