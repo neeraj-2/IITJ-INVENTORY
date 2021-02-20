@@ -7,6 +7,6 @@ func (s *Server) InitializeRoutes() {
 	api := r.Group("/api")
 	{
 		api.GET("/getHome", s.GetHome)
-		api.POST("/addUser", s.AddUser)
+		api.POST("/checkEmailExists", s.CheckIfEmailExists)
 	}
 }
