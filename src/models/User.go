@@ -10,15 +10,5 @@ type User struct {
 	Name     string `gorm:"not null"`
 	Email    string `gorm:"not null"`
 	Password string `gorm:"not null"`
-	Issued []Issued
-}
-
-type Email struct {
-	Email string `json:"email"`
-}
-
-func EmailExists(db *gorm.DB, email string) (User, error) {
-	var user User
-	err := db.Find(&user, "Email = ?", email).Error
-	return user, err
+	Issued   []Issued
 }

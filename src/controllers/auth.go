@@ -1,11 +1,14 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"myurl.com/inventory/helpers"
 	"net/http"
 	"os"
+
+	"myurl.com/inventory/helpers"
+	"myurl.com/inventory/models"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
@@ -31,9 +34,8 @@ func (s *Server) Login(ctx *gin.Context) {
 
 func (s *Server) Callback(ctx *gin.Context) {
 	if ctx.Query("state") != randomState {
-		panic("state is not valid")
 		ctx.Redirect(http.StatusTemporaryRedirect, "auth/error")
-		return
+		panic("state is not valid")
 	}
 
 	token, err := googleOauthConfig.Exchange(oauth2.NoContext, ctx.Query("code"))
@@ -53,4 +55,19 @@ func (s *Server) Callback(ctx *gin.Context) {
 
 func (s *Server) Error(ctx *gin.Context) {
 	ctx.String(http.StatusOK, "<h1>Error in Login</h1>")
+}
+
+func (s *Server) AdminLogin(ctx *gin.Context) {
+	db := s.DB
+	var soc models.Society
+	err := json.NewDecoder(ctx.Request.Body).Decode(&soc)
+	helpers.CheckError(err)
+	society, err := models.CheckSocietyExists(db, soc)
+	if err != nil {
+		ctx.Status(http.StatusBadRequest)
+	} else {
+		token, err := helpers.CreateToken(uint32(society.ID))
+		helpers.CheckError(err)
+		ctx.JSON(http.StatusOK, gin.H{"jwt": token})
+	}
 }

@@ -24,17 +24,21 @@ func (s *Server) GetHome(ctx *gin.Context) {
 
 }
 
-//Check If email Exists ...
-func (s *Server) CheckIfEmailExists(ctx *gin.Context) {
+//AddUser ...
+func (s *Server) AddUser(ctx *gin.Context) {
 	db := s.DB
-	var email models.Email
-	err := json.NewDecoder(ctx.Request.Body).Decode(&email)
+
+	var user models.User
+
+	err := json.NewDecoder(ctx.Request.Body).Decode(&user)
 	helpers.CheckError(err)
 
-	user, er := models.EmailExists(db, email.Email)
-	if er != nil {
-		ctx.JSON(http.StatusOK, gin.H{"user": nil})
-	} else {
-		ctx.JSON(http.StatusOK, gin.H{"user": user})
-	}
+	fmt.Println(user)
+
+	db.Create(&user)
+
+	fmt.Println(ctx.PostForm("user"))
+
+	ctx.String(http.StatusOK, "User Added")
+	defer db.Close()
 }

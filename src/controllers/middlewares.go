@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"errors"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"myurl.com/inventory/helpers"
 )
 
@@ -15,14 +15,19 @@ func SetMiddlewareJSON(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
+func respondWithError(c *gin.Context, code int, message interface{}) {
+	c.AbortWithStatusJSON(code, gin.H{"error": message})
+}
+
 //SetMiddlewareAuthentication checks for token in request
-func SetMiddlewareAuthentication(next http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		err := helpers.TokenValid(r)
+func SetMiddlewareAuthentication() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		err := helpers.TokenValid(ctx.Request)
 		if err != nil {
-			helpers.ERROR(w, http.StatusUnauthorized, errors.New("unauthorized"))
+			respondWithError(ctx, 401, "Invalid API token")
 			return
 		}
-		next(w, r)
+		ctx.Next()
+
 	}
 }
