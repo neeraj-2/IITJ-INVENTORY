@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 
 	"myurl.com/inventory/helpers"
 	"myurl.com/inventory/models"
@@ -18,8 +17,8 @@ import (
 var (
 	googleOauthConfig = &oauth2.Config{
 		RedirectURL:  "http://localhost:8080/auth/callback",
-		ClientID:     os.Getenv("CLIENT_ID"),
-		ClientSecret: os.Getenv("CLIENT_SECRETS"),
+		ClientID:     "235197254287-s5tv1jmh5ojqb6l5q2qjgb98nfgdivnd.apps.googleusercontent.com",
+		ClientSecret: "z5wnCsC17gFFzJ1SeTASjN",
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 		Endpoint:     google.Endpoint,
 	}
@@ -57,7 +56,7 @@ func (s *Server) Error(ctx *gin.Context) {
 	ctx.String(http.StatusOK, "<h1>Error in Login</h1>")
 }
 
-func (s *Server) AdminLogin(ctx *gin.Context) {
+func (s *Server) SocietyLogin(ctx *gin.Context) {
 	db := s.DB
 	var soc models.Society
 	err := json.NewDecoder(ctx.Request.Body).Decode(&soc)
@@ -70,4 +69,21 @@ func (s *Server) AdminLogin(ctx *gin.Context) {
 		helpers.CheckError(err)
 		ctx.JSON(http.StatusOK, gin.H{"jwt": token})
 	}
+}
+
+func (s *Server) AdminLogin(ctx *gin.Context) {
+	db := s.DB
+	var us models.User
+	err := json.NewDecoder(ctx.Request.Body).Decode(&us)
+	helpers.CheckError(err)
+
+	user, err := models.CheckUserExists(db, us)
+	if err != nil {
+		ctx.Status(http.StatusBadRequest)
+	} else {
+		token, err := helpers.CreateToken(user.UUID)
+		helpers.CheckError(err)
+		ctx.JSON(http.StatusOK, gin.H{"jwt": token})
+	}
+
 }

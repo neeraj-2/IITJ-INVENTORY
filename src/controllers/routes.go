@@ -19,12 +19,20 @@ func (s *Server) InitializeRoutes() {
 		auth.GET("/login", s.Login)
 		auth.GET("/callback", s.Callback)
 		auth.GET("error", s.Error)
-		auth.POST("/admin/login", s.AdminLogin)
+		auth.POST("/society/login", s.SocietyLogin)
 	}
 
 	admin := r.Group("/admin")
-	api.Use(SetMiddlewareAuthenticationAdmin(s.DB))
+
 	{
-		admin.POST("/createSociety", s.CreateSociety)
+		auth := admin.Group("/auth")
+		{
+			auth.POST("/login", s.AdminLogin)
+		}
+		protected := admin.Group("/protected")
+		protected.Use(SetMiddlewareAuthenticationAdmin(s.DB))
+		{
+			protected.POST("/createSociety", s.CreateSociety)
+		}
 	}
 }

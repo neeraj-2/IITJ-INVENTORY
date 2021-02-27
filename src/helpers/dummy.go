@@ -44,4 +44,12 @@ func InsertDummyData(db *gorm.DB) {
 		i += 1
 	}
 
+	user := models.User{
+		Name:     "superdummyuser",
+		Password: "adminpass",
+		Email:    "testemailuser@test.com",
+		IsAdmin:  true,
+	}
+	db.Create(&user)
+
 }
