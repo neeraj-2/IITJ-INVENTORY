@@ -25,11 +25,10 @@ func (s *Server) InitializeRoutes() {
 	admin := r.Group("/admin")
 
 	{
-		auth := admin.Group("/auth")
-		{
-			auth.POST("/login", s.AdminLogin)
-		}
-		protected := admin.Group("/protected")
+
+		admin.POST("/login", s.AdminLogin)
+
+		protected := admin.Group("/")
 		protected.Use(SetMiddlewareAuthenticationAdmin(s.DB))
 		{
 			protected.POST("/createSociety", s.CreateSociety)
