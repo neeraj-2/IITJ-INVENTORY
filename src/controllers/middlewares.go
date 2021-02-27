@@ -50,3 +50,39 @@ func SetMiddlewareAuthenticationAdmin(db *gorm.DB) gin.HandlerFunc {
 		ctx.Next()
 	}
 }
+
+//SetMiddlewareAuthenticationStudent checks for token in request
+func SetMiddlewareAuthenticationStudent(db *gorm.DB) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		UserUUID, err := helpers.ExtractTokenID(ctx.Request)
+		if err != nil {
+			respondWithError(ctx, 401, "Invalid API token")
+			return
+		}
+		var user models.User
+		result := db.Find(&user).Where("UUID = ?", UserUUID)
+		if result.Error != nil {
+			respondWithError(ctx, 401, "Invalid API token")
+			return
+		}
+		ctx.Next()
+	}
+}
+
+//SetMiddlewareAuthenticationSociety checks for token in request
+func SetMiddlewareAuthenticationSociety(db *gorm.DB) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		societyUUID, err := helpers.ExtractTokenID(ctx.Request)
+		if err != nil {
+			respondWithError(ctx, 401, "Invalid API token")
+			return
+		}
+		var society models.Society
+		result := db.Find(&society).Where("UUID = ?", societyUUID, true)
+		if result.Error != nil {
+			respondWithError(ctx, 401, "Invalid API token")
+			return
+		}
+		ctx.Next()
+	}
+}

@@ -17,11 +17,21 @@ func (s *Server) InitializeRoutes() {
 	student := r.Group("/student")
 	{
 		student.POST("/login", s.StudentLogin)
+		protected := student.Group("/")
+		protected.Use(SetMiddlewareAuthenticationStudent(s.DB))
+		{
+
+		}
 	}
 
 	society := r.Group("/society")
 	{
 		society.POST("/login", s.SocietyLogin)
+		protected := society.Group("/")
+		protected.Use(SetMiddlewareAuthenticationSociety(s.DB))
+		{
+
+		}
 	}
 
 	admin := r.Group("/admin")
