@@ -23,6 +23,7 @@ func (s *Server) InitializeRoutes() {
 	}
 
 	admin := r.Group("/admin")
+	api.Use(SetMiddlewareAuthenticationAdmin(s.DB))
 	{
 		admin.POST("/createSociety", s.CreateSociety)
 	}
