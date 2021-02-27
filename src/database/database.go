@@ -24,13 +24,35 @@ func InitialMigration() *gorm.DB {
 	db, err := gorm.Open("postgres", psqlconn)
 	helpers.CheckError(err)
 
-	// Migrate the schema
-	db.AutoMigrate(&models.User{})
-	db.AutoMigrate(&models.Item{})
-	db.AutoMigrate(&models.Society{})
-	db.AutoMigrate(&models.Issued{})
-	db.AutoMigrate(&models.Inbound{})
-	db.AutoMigrate(&models.Defective{})
+	debug := os.Getenv("DEBUG")
+	if debug == "true" {
+		// Drop Tables if exists
+		db.DropTableIfExists(&models.User{})
+		db.DropTableIfExists(&models.Item{})
+		db.DropTableIfExists(&models.Society{})
+		db.DropTableIfExists(&models.Issued{})
+		db.DropTableIfExists(&models.Inbound{})
+		db.DropTableIfExists(&models.Defective{})
+
+		// Migrate the schema
+		db.AutoMigrate(&models.User{})
+		db.AutoMigrate(&models.Item{})
+		db.AutoMigrate(&models.Society{})
+		db.AutoMigrate(&models.Issued{})
+		db.AutoMigrate(&models.Inbound{})
+		db.AutoMigrate(&models.Defective{})
+
+		helpers.InsertDummyData(db)
+
+	} else {
+		// Migrate the schema
+		db.AutoMigrate(&models.User{})
+		db.AutoMigrate(&models.Item{})
+		db.AutoMigrate(&models.Society{})
+		db.AutoMigrate(&models.Issued{})
+		db.AutoMigrate(&models.Inbound{})
+		db.AutoMigrate(&models.Defective{})
+	}
 
 	return db
 }

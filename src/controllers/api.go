@@ -9,6 +9,7 @@ import (
 	"myurl.com/inventory/models"
 
 	"github.com/gin-gonic/gin"
+	uuid "github.com/satori/go.uuid"
 )
 
 //GetHome ..
@@ -65,9 +66,13 @@ func (s *Server) GetItems(ctx *gin.Context) {
 
 	var items []models.Item
 
-	societyId, err := helpers.ExtractTokenID(ctx.Request)
-	helpers.CheckError(err)
-
+	keys := ctx.Request.URL.Query()
+	societyId, err := uuid.FromString(keys.Get("society"))
+	if err != nil {
+		newSocietyId, err := helpers.ExtractTokenID(ctx.Request)
+		helpers.CheckError(err)
+		societyId = newSocietyId
+	}
 	db.Find(&items).Where("society_id = ?", societyId)
 
 	ctx.JSON(http.StatusOK, gin.H{"items": items})
