@@ -66,7 +66,7 @@ func (s *Server) AdminLogin(ctx *gin.Context) {
 	if err != nil {
 		ctx.Status(http.StatusBadRequest)
 	} else {
-		token, err := helpers.CreateToken(uint32(society.ID))
+		token, err := helpers.CreateToken(society.UUID)
 		helpers.CheckError(err)
 		ctx.JSON(http.StatusOK, gin.H{"jwt": token})
 	}

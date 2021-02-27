@@ -7,8 +7,11 @@ func (s *Server) InitializeRoutes() {
 	api := r.Group("/api")
 	api.Use(SetMiddlewareAuthentication())
 	{
-		api.GET("/getHome", s.GetHome)
+		api.GET("/getUsers", s.GetUsers)
 		api.POST("/addUser", s.AddUser)
+		api.POST("/addItem", s.AddItem)
+		api.GET("/getItems", s.GetItems)
+
 	}
 
 	auth := r.Group("/auth")
@@ -17,5 +20,10 @@ func (s *Server) InitializeRoutes() {
 		auth.GET("/callback", s.Callback)
 		auth.GET("error", s.Error)
 		auth.POST("/admin/login", s.AdminLogin)
+	}
+
+	admin := r.Group("/admin")
+	{
+		admin.POST("/createSociety", s.CreateSociety)
 	}
 }

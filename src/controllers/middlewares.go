@@ -28,6 +28,5 @@ func SetMiddlewareAuthentication() gin.HandlerFunc {
 			return
 		}
 		ctx.Next()
-
 	}
 }

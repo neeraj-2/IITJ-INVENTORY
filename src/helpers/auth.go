@@ -6,16 +6,15 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
 	"time"
 
-	//JWT
 	jwt "github.com/dgrijalva/jwt-go"
+	uuid "github.com/satori/go.uuid"
 )
 
 //CreateToken to create JWT token
-func CreateToken(userID uint32) (string, error) {
+func CreateToken(userID uuid.UUID) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["user_id"] = userID
@@ -45,7 +44,7 @@ func TokenValid(r *http.Request) error {
 //ExtractToken ...
 func ExtractToken(r *http.Request) string {
 	keys := r.URL.Query()
-	token := keys.Get("token")
+	token := keys.Get("jwt")
 	if token != "" {
 		return token
 	}
@@ -57,7 +56,7 @@ func ExtractToken(r *http.Request) string {
 }
 
 //ExtractTokenID ...
-func ExtractTokenID(r *http.Request) (uint32, error) {
+func ExtractTokenID(r *http.Request) (uuid.UUID, error) {
 
 	tokenString := ExtractToken(r)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -67,17 +66,21 @@ func ExtractTokenID(r *http.Request) (uint32, error) {
 		return []byte(os.Getenv("API_SECRET")), nil
 	})
 	if err != nil {
-		return 0, err
+		return uuid.Nil, err
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
-		uid, err := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
+		//uid, err := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
+		//if err != nil {
+		//	return 0, err
+		//}
+		uid, err := uuid.FromString(fmt.Sprintf("%s", claims["user_id"]))
 		if err != nil {
-			return 0, err
+			return uuid.Nil, err
 		}
-		return uint32(uid), nil
+		return uid, nil
 	}
-	return 0, nil
+	return uuid.Nil, nil
 }
 
 //Pretty display the claims nicely in the terminal
