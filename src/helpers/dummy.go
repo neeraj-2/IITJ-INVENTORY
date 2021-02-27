@@ -35,6 +35,12 @@ func InsertDummyData(db *gorm.DB) {
 			j += 1
 		}
 
+		user := models.User{
+			Name:  "dummyUser" + fmt.Sprintf("%d", i),
+			Email: "testemailuser" + fmt.Sprintf("%d", i) + "@test.com",
+		}
+		db.Create(&user)
+
 		i += 1
 	}
 

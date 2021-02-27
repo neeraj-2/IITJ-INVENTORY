@@ -11,7 +11,7 @@ type User struct {
 	Name    string `gorm:"not null"`
 	Email   string `gorm:"not null"`
 	Issued  []Issued
-	isAdmin bool      `gorm: "DEFAULT:false"`
+	IsAdmin bool      `gorm:"default:false"`
 	UUID    uuid.UUID `gorm:"primaryKey"`
 }
 
