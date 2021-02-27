@@ -12,7 +12,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-//GetHome ..
+//GetUsers ...
 func (s *Server) GetUsers(ctx *gin.Context) {
 	db := s.DB
 
@@ -43,6 +43,7 @@ func (s *Server) AddUser(ctx *gin.Context) {
 	ctx.String(http.StatusOK, "User Added")
 }
 
+//AddItem ...
 func (s *Server) AddItem(ctx *gin.Context) {
 	db := s.DB
 
@@ -61,19 +62,20 @@ func (s *Server) AddItem(ctx *gin.Context) {
 	ctx.String(http.StatusOK, "Item Added")
 }
 
+//GetItems ...
 func (s *Server) GetItems(ctx *gin.Context) {
 	db := s.DB
 
 	var items []models.Item
 
 	keys := ctx.Request.URL.Query()
-	societyId, err := uuid.FromString(keys.Get("society"))
+	societyID, err := uuid.FromString(keys.Get("society"))
 	if err != nil {
-		newSocietyId, err := helpers.ExtractTokenID(ctx.Request)
+		newSocietyID, err := helpers.ExtractTokenID(ctx.Request)
 		helpers.CheckError(err)
-		societyId = newSocietyId
+		societyID = newSocietyID
 	}
-	db.Find(&items).Where("society_id = ?", societyId)
+	db.Find(&items).Where("society_id = ?", societyID)
 
 	ctx.JSON(http.StatusOK, gin.H{"items": items})
 }

@@ -14,20 +14,19 @@ func (s *Server) InitializeRoutes() {
 
 	}
 
-	auth := r.Group("/auth")
+	student := r.Group("/student")
 	{
-		auth.GET("/login", s.Login)
-		auth.GET("/callback", s.Callback)
-		auth.GET("error", s.Error)
-		auth.POST("/society/login", s.SocietyLogin)
+		student.POST("/login", s.StudentLogin)
+	}
+
+	society := r.Group("/society")
+	{
+		society.POST("/login", s.SocietyLogin)
 	}
 
 	admin := r.Group("/admin")
-
 	{
-
 		admin.POST("/login", s.AdminLogin)
-
 		protected := admin.Group("/")
 		protected.Use(SetMiddlewareAuthenticationAdmin(s.DB))
 		{

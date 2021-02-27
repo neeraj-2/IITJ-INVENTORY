@@ -22,8 +22,16 @@ func (user *User) BeforeCreate(scope *gorm.Scope) error {
 	return scope.SetColumn("UUID", uuid)
 }
 
+//CheckUserExists ...
 func CheckUserExists(db *gorm.DB, us User) (User, error) {
 	var user User
 	err := db.Find(&user, "Email = ? AND Password = ?", us.Email, us.Password).Error
+	return user, err
+}
+
+//CheckUserExistsFromEmail ...
+func CheckUserExistsFromEmail(db *gorm.DB, email string) (User, error) {
+	var user User
+	err := db.Find(&user, "Email = ?", email).Error
 	return user, err
 }

@@ -9,6 +9,7 @@ import (
 	"myurl.com/inventory/models"
 )
 
+//CreateSociety ...
 func (s *Server) CreateSociety(ctx *gin.Context) {
 	db := s.DB
 
