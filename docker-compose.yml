@@ -17,6 +17,7 @@ services:
   database:
     image: postgres:latest
     container_name: database
+    env_file: .env
     environment:
       - POSTGRES_USER=${DB_USER}  
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -31,6 +32,7 @@ services:
     
   pgadmin:
     image: dpage/pgadmin4
+    env_file: .env
     container_name: pgadmin_container
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}

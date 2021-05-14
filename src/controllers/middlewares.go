@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	// "fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -55,6 +56,7 @@ func SetMiddlewareAuthenticationAdmin(db *gorm.DB) gin.HandlerFunc {
 func SetMiddlewareAuthenticationStudent(db *gorm.DB) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		UserUUID, err := helpers.ExtractTokenID(ctx.Request)
+		// fmt.Println("User uuid", UserUUID)
 		if err != nil {
 			respondWithError(ctx, 401, "Invalid API token")
 			return

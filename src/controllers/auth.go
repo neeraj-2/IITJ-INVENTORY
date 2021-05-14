@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"myurl.com/inventory/helpers"
@@ -35,12 +36,31 @@ func (s *Server) StudentLogin(ctx *gin.Context) {
 
 	user, err := models.CheckUserExistsFromEmail(db, us.Email)
 	if err != nil {
-		db.Create(models.User{Name: us.Name, Email: us.Email})
+		user = models.User{Name: us.Name, Email: us.Email}
+		db.Create(&user)
 	}
+
+	fmt.Println("Err is.....", user)
 
 	token, err = helpers.CreateToken(user.UUID)
 	helpers.CheckError(err)
 	ctx.JSON(http.StatusOK, gin.H{"jwt": token})
+}
+
+func (s *Server) GetProfile(ctx *gin.Context) {
+	db := s.DB
+	var user models.User
+
+	studentId, err := helpers.ExtractTokenID(ctx.Request)
+	helpers.CheckError(err)
+
+	db.Find(&user).Where("uuid = ?", studentId)
+
+	var items[] models.Issued
+
+	db.Preloads("Item").Find(&items).Where("UserId = ?", studentId)
+
+	ctx.JSON(http.StatusOK, gin.H{"user": user, "issued": items})
 }
 
 //SocietyLogin ...

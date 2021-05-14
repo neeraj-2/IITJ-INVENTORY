@@ -7,6 +7,7 @@ import (
 
 type Society struct {
 	gorm.Model
+	Name     string `gorm:"not null"` 
 	Email    string `gorm:"not null" json:"email"`
 	Password string `gorm:"not null" json:"password"`
 	Details  string `json:"details"`

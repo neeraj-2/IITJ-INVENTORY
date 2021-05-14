@@ -2,7 +2,7 @@ package models
 
 import (
 	"time"
-
+	uuid "github.com/satori/go.uuid"
 	"github.com/jinzhu/gorm"
 )
 
@@ -13,6 +13,8 @@ type Issued struct {
 	Approved  string    `gorm:"not null"`
 	Denied    string    `gorm:"not null"`
 	Purpose   string    `gorm:"not null"`
-	UserId uint32
-	Item Item
+	UserId uuid.UUID
+	Name 		string `gorm:"not null"`
+	Details     string `json:"details"`
+	SocietyName     string    `gorm:"not null"`
 }

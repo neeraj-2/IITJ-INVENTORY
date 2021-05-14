@@ -7,11 +7,13 @@ import (
 
 type Item struct {
 	gorm.Model
+	SocietyName string `gorm:"not null"`
+	Name 		string `gorm:"not null"`
 	Details     string `json:"details"`
 	Quantity    int    `gorm:"not null" json:"quantity"`
 	Available   int    `gorm:"not null" json:"available"`
-	DefectiveId uint32
+	DefectiveId uint
 	SocietyId   uuid.UUID
-	IssuedId    uint32
-	InboundId   uint32
+	IssuedId    uint
+	InboundId   uint 
 }
